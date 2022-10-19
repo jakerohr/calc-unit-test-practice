@@ -23,10 +23,14 @@ describe('calculator', function () {
       button = {
         one: document.querySelector('[data-id="1"]'),
         two: document.querySelector('[data-id="2"]'),
+        three: document.querySelector('[data-id="3"]'),
+        six: document.querySelector('[data-id="6"]'),
         clear: document.querySelector('[data-action="clear"]'),
         decimal: document.querySelector('[data-action="decimal"]'),
         add: document.querySelector('[data-action="add"]'),
         subtract: document.querySelector('[data-action="subtract"]'),
+        multiply: document.querySelector('[data-action="multiply"]'),
+        divide: document.querySelector('[data-action="divide"]'),
         calculate: document.querySelector('[data-action="calculate"]'),
       }
       initCalc();
@@ -82,6 +86,27 @@ describe('calculator', function () {
     button.two.click();
     button.calculate.click();
     assert.strictEqual(display.textContent, '3', 'display did not add two numbers together');
+  })
+  it('should subtract two numbers', function () {
+    button.three.click();
+    button.subtract.click();
+    button.one.click();
+    button.calculate.click();
+    assert.strictEqual(display.textContent, '2', 'display did not subtract two numbers.');
+  })
+  it('should multiply two numbers', function () {
+    button.three.click();
+    button.multiply.click();
+    button.two.click();
+    button.calculate.click();
+    assert.strictEqual(display.textContent, '6', 'display did not multiply two numbers.');
+  })
+  it('should multiply two numbers', function () {
+    button.six.click();
+    button.divide.click();
+    button.two.click();
+    button.calculate.click();
+    assert.strictEqual(display.textContent, '3', 'display did not multiply two numbers.');
   })
 
 });
