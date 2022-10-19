@@ -10,7 +10,7 @@ const getElements = () => {
 
 const updateDisplay = (num, displayArg) => {
   const displayElm = displayArg || display;
-  displayElm.innerHTML = num;
+  displayElm.textContent = num;
 };
 
 const addListeners = () => {
@@ -23,6 +23,9 @@ const addListeners = () => {
       if (!action) {
         if (displayedNum === '0') {
           updateDisplay(keyContent);
+        } else {
+          const concatNum = displayedNum + keyContent;
+          updateDisplay(concatNum);
         }
       }
       if (
@@ -38,7 +41,7 @@ const addListeners = () => {
       }
 
       if (action === 'clear') {
-        console.log('clear key!');
+        updateDisplay('0');
       }
 
       if (action === 'calculate') {
