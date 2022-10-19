@@ -20,12 +20,16 @@ const addListeners = () => {
       const action = key.dataset.action;
       const keyContent = key.textContent;
       const displayedNum = display.textContent;
+      // Remove .is-depressed class from all keys
+      Array.from(key.parentNode.children).forEach((k) =>
+        k.classList.remove('is-depressed')
+      );
+      const previousKeyType = calculator.dataset.previousKeyType;
       if (!action) {
-        if (displayedNum === '0') {
+        if (displayedNum === '0' || previousKeyType === 'operator') {
           updateDisplay(keyContent);
         } else {
-          const concatNum = displayedNum + keyContent;
-          updateDisplay(concatNum);
+          updateDisplay(displayedNum + keyContent);
         }
       }
       if (
@@ -34,10 +38,11 @@ const addListeners = () => {
         action === 'multiply' ||
         action === 'divide'
       ) {
-        updateDisplay("it's an operator!");
+        key.classList.add('is-depressed');
+        calculator.dataset.previousKeyType = 'operator';
       }
       if (action === 'decimal') {
-        console.log('decimal key!');
+        updateDisplay(displayedNum + '.');
       }
 
       if (action === 'clear') {
