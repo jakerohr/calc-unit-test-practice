@@ -7,7 +7,9 @@ Add functionality by adding to the `public/javascripts/modules/calculator.mjs` f
 You shouldn't need to update the HTML and CSS for this app, but feel free if you want to. The files are located in the `public` directory.
 
 You can follow along with this guide to get the calculator working but always give it your best shot for each step before using the guide:
+
 https://zellwk.com/blog/calculator-part-1/
+
 https://zellwk.com/blog/calculator-part-2/
 
 ## Getting Started
@@ -36,4 +38,9 @@ To run your tests, simply run:
 
 `npm run test` 
 
-Be sure to write a test for new bit of functionality added. Practice Test Driven Development by writing the test first, expecting it to fail. Then add the code to make your test work. 
+Be sure to write a test for new bit of functionality added. Practice Test Driven Development by writing the test first, expecting it to fail. Then add the code to make your test work.
+
+Mocha assertion library documentation can be found here:
+https://nodejs.org/api/assert.html
+
+Feel free to install chai or use any other assertion library if you want!
