@@ -13,18 +13,26 @@ describe('calculator', function () {
       dom = await JSDOM.fromFile(
         // loads the html for use in the tests
         path.resolve('public/index.html'),
-  
+
       );
       await new Promise((resolve) =>
         dom.window.addEventListener('load', resolve)
       );
-      
+
       global.document = dom.window.document;
       display = document.querySelector('.calculator__display');
       // Add more buttons as needed below
       button = {
+        zero: document.querySelector('[data-id="0"]'),
         one: document.querySelector('[data-id="1"]'),
         two: document.querySelector('[data-id="2"]'),
+        three: document.querySelector('[data-id="3"]'),
+        four: document.querySelector('[data-id="4"]'),
+        five: document.querySelector('[data-id="5"]'),
+        six: document.querySelector('[data-id="6"]'),
+        seven: document.querySelector('[data-id="7"]'),
+        eight: document.querySelector('[data-id="8"]'),
+        nine: document.querySelector('[data-id="9"]'),
         clear: document.querySelector('[data-action="clear"]'),
 
       }
@@ -84,7 +92,7 @@ describe('calculator', function () {
     // write your own tests
     assert.strictEqual(true, false, 'update this test');
   })
-  // write more tests below. Think about how to test for "unhappy paths". 
+  // write more tests below. Think about how to test for "unhappy paths".
   // Try to break it in as many ways as you can!
 
 
