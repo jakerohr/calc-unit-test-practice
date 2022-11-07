@@ -95,9 +95,15 @@ describe('calculator', function () {
     assert.strictEqual(true, false, 'update this test');
   });
 
-  xit('should add two numbers together', function () {
+  it('should add two numbers together', function () {
     // write your own tests
-    assert.strictEqual(true, false, 'update this test');
+    const  displayNum1 = button.four;
+    const displayNum2 = button.five;
+    displayNum1.click();
+    button.add.click();
+    displayNum2.click();
+    button.calculate.click();
+    assert.equal(display.textContent,  9)
   })
   xit('should subtract two numbers', function () {
     // write your own tests
@@ -114,7 +120,7 @@ describe('calculator', function () {
   // write more tests below. Think about how to test for "unhappy paths".
   // Try to break it in as many ways as you can!
 
-  xit('has a sample test', function() {
-    assert.equal(true, true);
+  xit('can chain multiple operations together', function () {
   });
+
 });

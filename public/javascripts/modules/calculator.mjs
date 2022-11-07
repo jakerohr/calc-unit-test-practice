@@ -24,6 +24,10 @@ const addListeners = () => {
       const displayedNum = display.textContent;
       const previousKeyType = calculator.dataset.previousKeyType;
 
+      // remove .is-depressed class from all keys
+      Array.from(key.parentNode.children)
+          .forEach(k => k.classList.remove('is-depressed'))
+
       // If the calculator shows 0, we want to replace the calculator’s display with the textContent of the clicked key.
       //If the previousKeyType is an operator, we want to replace the displayed number with clicked number
       if (!action) {
@@ -48,6 +52,7 @@ const addListeners = () => {
           action === 'subtract' ||
           action === 'divide' ||
           action === 'multiply'
+          //action === 'modulo' //use later
       ) {
         key.classList.add('is-depressed'); // Operator keys should be depressed when they're clicked on
         // update the display to the clicked key. Before we do this, we need a way to tell if the previous key is an operator key.
@@ -59,6 +64,22 @@ const addListeners = () => {
       const calculate = (n1, operator, n2) => {
         let result = '';
 
+        // switch (operator) {
+        //   case "add":
+        //     return +n1 + +n2;
+        //   case "subtract":
+        //     return +n1 - +n2;
+        //   case "multiply":
+        //     return +n1 * +n2;
+        //   case "divide":
+        //     return +n1 / +n2;
+        //   // case "modulo": //use later
+        //   //   return +n1 % +n2;
+        //   default:
+        //     return result;
+        //
+        // }
+        // switch vs else if
         if (operator === 'add') {
           result = parseInt(n1) + parseFloat(n2);
         } else if (operator === 'subtract') {
@@ -86,9 +107,6 @@ const addListeners = () => {
       }
       updateDisplay(display.textContent)
 
-      // remove .is-depressed class from all keys
-      Array.from(key.parentNode.children)
-          .forEach(k => k.classList.remove('is-depressed'))
     }
   });
 };
