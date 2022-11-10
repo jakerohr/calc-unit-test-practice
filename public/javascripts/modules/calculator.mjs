@@ -69,40 +69,63 @@ const addListeners = () => {
       // }
 
       if (!action) {
+        if (
+            displayedNum === '0' ||
+            previousKeyType === 'operator' ||
+            previousKeyType === 'calculate'
+        ) {
+          display.textContent = keyContent
+        } else {
+          display.textContent = displayedNum + keyContent
+        }
         calculator.dataset.previousKeyType = 'number'
       }
+      // If user hits any number after hitting a decimal key, the number should be appended on the display as well
       if (action === 'decimal') {
         if (!displayedNum.includes('.')) {
           display.textContent = displayedNum + '.'
-        } else if (previousKeyType === 'operator') {
+        } else if (
+            previousKeyType === 'operator' ||
+            previousKeyType === 'calculate'
+        ) {
           display.textContent = '0.'
         }
         calculator.dataset.previousKeyType = 'decimal'
       }
-
+      if (action !== 'clear') {
+        const clearButton = calculator.querySelector('[data-action=clear]')
+        clearButton.textContent = 'CE'
+      }
       if (action === 'clear') {
+        if (key.textContent === 'AC') {
+          calculator.dataset.firstValue = ''
+          calculator.dataset.modValue = ''
+          calculator.dataset.previousKeyType = ''
+          calculator.dataset.operator = ''
+        } else {
+          key.textContent = 'AC'
+        }
+        display.textConent = 0
         calculator.dataset.previousKeyType = 'clear'
       }
       if (action === 'calculate') {
-        const firstValue = calculator.dataset.firstValue;
+        let firstValue = calculator.dataset.firstValue;
         const operator = calculator.dataset.operator;
-        const secondValue = displayedNum;
+        let secondValue = displayedNum;
         //console.log("you pressed the equal key")
         if (firstValue) {
+          if (previousKeyType === 'calculate') {
+            firstValue = displayedNum
+            secondValue = calculator.dataset.modValue
+          }
           display.textContent = calculate(firstValue, operator, secondValue)
         }
+        // Set modValue attribute
+        calculator.dataset.modValue = secondValue
         calculator.dataset.previousKeyType = 'calculate'
       }
       if (!displayedNum.includes('.')) {
         display.textContent = displayedNum + '.'
-      }
-      // If user hits any number after hitting a decimal key, the number should be appended on the display as well
-      if (action === 'decimal') {
-        display.textContent = displayedNum + '.'
-      }
-
-      if (!action) {
-        console.log("You pressed a number key");
       }
       if (
           action === 'add' ||
