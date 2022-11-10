@@ -7,6 +7,9 @@ import { initCalc } from '../public/javascripts/modules/calculator.mjs';
 import {getHTMLElementInterface} from "jsdom/lib/jsdom/living/helpers/create-element.js";
 let display;
 let button = {};
+// const getRandomButton = button[Math.floor(Math.random() * button.length)];
+// document.getElementById("data-id").innerHTML=getRandomButton
+
 describe('calculator', function () {
     let dom;
 
@@ -72,7 +75,8 @@ describe('calculator', function () {
 
   xit('should reset to zero if clear key is pressed', function () {
     // write your own tests
-    assert.strictEqual(true, false, 'update this test');
+    button.clear.click()
+    assert.strictEqual(display.textContent, 0);
   });
 
   xit('should add a decimal to a number', function () {
@@ -95,7 +99,7 @@ describe('calculator', function () {
     assert.strictEqual(true, false, 'update this test');
   });
 
-  it('should add two numbers together', function () {
+  xit('should add two numbers together', function () {
     // write your own tests
     const  displayNum1 = button.four;
     const displayNum2 = button.five;
@@ -105,17 +109,40 @@ describe('calculator', function () {
     button.calculate.click();
     assert.equal(display.textContent,  9)
   })
+  it('should add two numbers together', function () {
+    // write your own tests
+    button.nine.click();
+    button.add.click();
+    button.eight.click();
+    button.calculate.click();
+    assert.equal(display.textContent,  17)
+    console.log(display.textContent)
+  })
   xit('should subtract two numbers', function () {
     // write your own tests
-    assert.strictEqual(true, false, 'update this test');
+    button.nine.click();
+    button.subtract.click();
+    button.eight.click();
+    button.calculate.click();
+    assert.equal(display.textContent,  1)
   })
   xit('should multiply two numbers', function () {
     // write your own tests
-    assert.strictEqual(true, false, 'update this test');
+    button.four.click();
+    button.multiply.click();
+    button.seven.click();
+    button.calculate.click();
+    assert.equal(display.textContent, 28)
   })
   xit('should divide two numbers', function () {
     // write your own tests
-    assert.strictEqual(true, false, 'update this test');
+    button.four.click();
+    button.four.click();
+    button.divide.click();
+    button.one.click();
+    button.one.click();
+    button.calculate.click();
+    assert.equal(display.textContent, 4)
   })
   // write more tests below. Think about how to test for "unhappy paths".
   // Try to break it in as many ways as you can!
