@@ -28,15 +28,6 @@ const addListeners = () => {
       Array.from(key.parentNode.children)
           .forEach(k => k.classList.remove('is-depressed'))
 
-      // If the calculator shows 0, we want to replace the calculator’s display with the textContent of the clicked key.
-      //If the previousKeyType is an operator, we want to replace the displayed number with clicked number
-      if (!action) {
-        if (displayedNum === 0 || previousKeyType === 'operator') {
-          display.textContent = keyContent
-        } else {
-          display.textContent = displayedNum + keyContent
-        }
-      }
       const calculate = (n1, operator, n2) => {
         let result = '';
 
@@ -68,6 +59,8 @@ const addListeners = () => {
       //
       // }
 
+      // If the calculator shows 0, we want to replace the calculator’s display with the textContent of the clicked key.
+      //If the previousKeyType is an operator, we want to replace the displayed number with clicked number
       if (!action) {
         if (
             displayedNum === '0' ||

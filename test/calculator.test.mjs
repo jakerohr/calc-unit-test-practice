@@ -52,24 +52,22 @@ describe('calculator', function () {
     });
 
   xit('should display a number if number key is pressed', function () {
-    const displayNum = button.one;
-    console.log(displayNum.dataset.id);
+    button.one.click();
+    console.log(button.one)
     assert.strictEqual(
-      displayNum.textContent,
+      display.textContent,
       '1',
       'output did not equal number 1'
     );
   });
 
   xit('should append a number if a second number key is pressed', function () {
-    const buttonOne = button.one;
-    const buttonTwo = button.two;
-    const appendNum = '' + buttonOne.dataset.id + buttonTwo.dataset.id;
-    console.log(appendNum);
+    button.five.click();
+    button.zero.click();
     assert.strictEqual(
-      appendNum.textContent,
-      '12',
-      'output did not equal number 12'
+      display.textContent,
+      '50',
+      'output did not equal number 50'
       );
     });
 
@@ -81,12 +79,16 @@ describe('calculator', function () {
 
   xit('should add a decimal to a number', function () {
     // write your own tests
-    assert.strictEqual(true, false, "update this test");
+    button.four.click();
+    button.decimal.click();
+    assert.strictEqual(display.textContent, 4., "Output does not equal 4.");
   });
 
   xit('should show operator keys as depressed when clicked', function () {
     // write your own tests. You don't necessarily need to use the "strictEqual" for every test.
-    assert.strictEqual(true, false, 'update this test');
+    // button.add.click();
+    // key.classList.add('is-depressed');
+    // assert.equal(display.textContent, button.add)
   })
 
   xit('should only allow one operator key to be depressed at a time', function () {
@@ -101,22 +103,11 @@ describe('calculator', function () {
 
   xit('should add two numbers together', function () {
     // write your own tests
-    const  displayNum1 = button.four;
-    const displayNum2 = button.five;
-    displayNum1.click();
-    button.add.click();
-    displayNum2.click();
-    button.calculate.click();
-    assert.equal(display.textContent,  9)
-  })
-  it('should add two numbers together', function () {
-    // write your own tests
     button.nine.click();
     button.add.click();
     button.eight.click();
     button.calculate.click();
     assert.equal(display.textContent,  17)
-    console.log(display.textContent)
   })
   xit('should subtract two numbers', function () {
     // write your own tests
