@@ -1,6 +1,6 @@
 let calculator;
 let display;
-let keys;
+  let keys;
 // let previousKeyType;
 
 const getElements = () => {
@@ -28,20 +28,27 @@ const addListeners = () => {
       Array.from(key.parentNode.children)
           .forEach(k => k.classList.remove('is-depressed'))
 
+      // const calculate = (n1, operator, n2) => {
+      //   let result = '';
+      //   if (operator === 'add') {
+      //     result = parseInt(n1) + parseFloat(n2);
+      //   } else if (operator === 'subtract') {
+      //     result = parseInt(n1) - parseFloat(n2);
+      //   } else if (operator === 'multiply') {
+      //     result = parseInt(n1) * parseFloat(n2);
+      //   } else if (operator === 'divide') {
+      //     result = parseInt(n1) / parseFloat(n2);
+      //   }
+      //   return result
+      // };
       const calculate = (n1, operator, n2) => {
-        let result = '';
-
-        if (operator === 'add') {
-          result = parseInt(n1) + parseFloat(n2);
-        } else if (operator === 'subtract') {
-          result = parseInt(n1) + parseFloat(n2);
-        } else if (operator === 'multiply') {
-          result = parseInt(n1) + parseFloat(n2);
-        } else if (operator === 'divide') {
-          result = parseInt(n1) + parseFloat(n2);
-        }
-        return result
-      };
+        const firstNum = parseFloat(n1)
+        const secondNum = parseFloat(n2)
+        if (operator === 'add') return firstNum + secondNum
+        if (operator === 'subtract') return firstNum - secondNum
+        if (operator === 'multiply') return firstNum * secondNum
+        if (operator === 'divide') return firstNum / secondNum
+        };
       // switch vs else if
       // switch (operator) {
       //   case "add":
@@ -73,55 +80,7 @@ const addListeners = () => {
         }
         calculator.dataset.previousKeyType = 'number'
       }
-      // If user hits any number after hitting a decimal key, the number should be appended on the display as well
-      if (action === 'decimal') {
-        if (!displayedNum.includes('.')) {
-          display.textContent = displayedNum + '.'
-        } else if (
-            previousKeyType === 'operator' ||
-            previousKeyType === 'calculate'
-        ) {
-          display.textContent = '0.'
-        }
-        calculator.dataset.previousKeyType = 'decimal'
-      }
-      if (action !== 'clear') {
-        const clearButton = calculator.querySelector('[data-action=clear]')
-        clearButton.textContent = 'CE'
-      }
-      if (action === 'clear') {
-        if (key.textContent === 'AC') {
-          calculator.dataset.firstValue = ''
-          calculator.dataset.modValue = ''
-          calculator.dataset.previousKeyType = ''
-          calculator.dataset.operator = ''
-        } else {
-          key.textContent = 'AC'
-        }
-        display.textConent = 0
-        calculator.dataset.previousKeyType = 'clear'
-      }
-      if (action === 'calculate') {
-        let firstValue = calculator.dataset.firstValue;
-        const operator = calculator.dataset.operator;
-        let secondValue = displayedNum;
-        //console.log("you pressed the equal key")
-        if (firstValue) {
-          if (previousKeyType === 'calculate') {
-            firstValue = displayedNum
-            secondValue = calculator.dataset.modValue
-          }
-          display.textContent = calculate(firstValue, operator, secondValue)
-        }
-        // Set modValue attribute
-        calculator.dataset.modValue = secondValue
-        calculator.dataset.previousKeyType = 'calculate'
-      }
-      if (!displayedNum.includes('.')) {
-        display.textContent = displayedNum + '.'
-      }
-      if (
-          action === 'add' ||
+      if (action === 'add' ||
           action === 'subtract' ||
           action === 'divide' ||
           action === 'multiply'
@@ -132,13 +91,14 @@ const addListeners = () => {
         const secondValue = displayedNum;
 
         // Note: It's sufficient to check for firstValue and operator because secondValue always exists
-        if (firstValue &&
+        if (
+            firstValue &&
             operator &&
-        previousKeyType !== 'operator'
+            previousKeyType !== 'operator' &&
+            previousKeyType !== 'calculate'
         ) {
           const calcValue = calculate(firstValue, operator, secondValue)
           display.textContent = calcValue
-
           // Update calculated value as firstValue
           calculator.dataset.firstValue = calcValue
         } else {
@@ -160,7 +120,54 @@ const addListeners = () => {
           display.textContent = calculate(firstValue, operator, secondValue)
         }
       }
-
+      // If user hits any number after hitting a decimal key, the number should be appended on the display as well
+      if (action === 'decimal') {
+        if (!displayedNum.includes('.')) {
+          display.textContent = displayedNum + '.'
+        } else if (
+            previousKeyType === 'operator' ||
+            previousKeyType === 'calculate'
+        ) {
+          display.textContent = '0.'
+        }
+        calculator.dataset.previousKeyType = 'decimal'
+      }
+      // if (action !== 'clear') {
+      //   const clearButton = calculator.querySelector('[data-action=clear]')
+      //   clearButton.textContent = 'CE'
+      // }
+      if (action === 'clear') {
+        if (key.textContent === 'AC') {
+          calculator.dataset.firstValue = ''
+          calculator.dataset.modValue = ''
+          calculator.dataset.previousKeyType = ''
+          calculator.dataset.operator = ''
+        } else {
+          key.textContent = 'AC'
+        }
+        display.textContent = 0
+        calculator.dataset.previousKeyType = 'clear'
+      }
+      if (action !== 'clear') {
+        const clearButton = calculator.querySelector('[data-action=clear]')
+        clearButton.textContent = 'CE'
+      }
+      if (action === 'calculate') {
+        let firstValue = calculator.dataset.firstValue;
+        const operator = calculator.dataset.operator;
+        let secondValue = displayedNum;
+        //console.log("you pressed the equal key")
+        if (firstValue) {
+          if (previousKeyType === 'calculate') {
+            firstValue = displayedNum
+            secondValue = calculator.dataset.modValue
+          }
+          display.textContent = calculate(firstValue, operator, secondValue)
+        }
+        // Set modValue attribute
+        calculator.dataset.modValue = secondValue
+        calculator.dataset.previousKeyType = 'calculate'
+      }
       updateDisplay(display.textContent)
     }
   });
