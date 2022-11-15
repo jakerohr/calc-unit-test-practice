@@ -157,15 +157,12 @@ describe('calculator', function () {
   })
   // write more tests below. Think about how to test for "unhappy paths".
   // Try to break it in as many ways as you can!
-  xit('can only add one decimal at a time', function () {
+  it('can only add one decimal at a time', function () {
     button.four.click();
     button.decimal.click();
     button.decimal.click();
-    const depressedDecimal = document.querySelector('is-depressed');
-    assert.strictEqual(depressedDecimal.length, 1, 'only 1 decimal can be clicked')
-  });
-  xit('can only calculate up to a certain number limit', function () {
-    assert.strictEqual(true, false, 'update this test');
+    const depressedDecimal = document.querySelector('.is-depressed');
+    assert.strictEqual(display.textContent.split('.').length - 1, 1, 'only 1 decimal can be clicked')
   });
   it('can not divide number by zero', function () {
     button.one.click();
@@ -173,6 +170,6 @@ describe('calculator', function () {
     button.zero.click();
     button.calculate.click();
     console.log(display.textContent)
-    assert.rejects(display.textContent, 'Error cannot divide number by zero')
+    assert.equal(display.textContent, Infinity, 'Cannot divide by zero')
   })
 });

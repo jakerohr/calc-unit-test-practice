@@ -109,9 +109,7 @@ const addListeners = () => {
         key.classList.add('is-depressed'); // Operator keys should be depressed when they're clicked on
         // update the display to the clicked key. Before we do this, we need a way to tell if the previous key is an operator key.
         calculator.dataset.previousKeyType = 'operator';
-        //calculator.dataset.firstValue = displayedNum; // store the calculator’s displayed value before we erase it
         calculator.dataset.operator = action;
-        //console.log("you pressed an operator key");
         if (
             firstValue &&
             operator &&
@@ -156,7 +154,6 @@ const addListeners = () => {
         let firstValue = calculator.dataset.firstValue;
         const operator = calculator.dataset.operator;
         let secondValue = displayedNum;
-        //console.log("you pressed the equal key")
         if (firstValue) {
           if (previousKeyType === 'calculate') {
             firstValue = displayedNum
