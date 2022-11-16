@@ -7,6 +7,9 @@ import { initCalc } from '../public/javascripts/modules/calculator.mjs';
 import {getHTMLElementInterface} from "jsdom/lib/jsdom/living/helpers/create-element.js";
 let display;
 let button = {};
+// const getRandomButton = button[Math.floor(Math.random() * button.length)];
+// document.getElementById("data-id").innerHTML=getRandomButton
+
 describe('calculator', function () {
     let dom;
 
@@ -48,79 +51,125 @@ describe('calculator', function () {
       initCalc();
     });
 
-  xit('should display a number if number key is pressed', function () {
-    const displayNum = button.one;
-    console.log(displayNum.dataset.id);
+  it('should display a number if number key is pressed', function () {
+    button.one.click();
+    console.log(display.textContent)
     assert.strictEqual(
-      displayNum.textContent,
+      display.textContent,
       '1',
       'output did not equal number 1'
     );
   });
 
-  xit('should append a number if a second number key is pressed', function () {
-    const buttonOne = button.one;
-    const buttonTwo = button.two;
-    const appendNum = '' + buttonOne.dataset.id + buttonTwo.dataset.id;
-    console.log(appendNum);
+  it('should append a number if a second number key is pressed', function () {
+    button.five.click();
+    button.zero.click();
+    console.log(display.textContent)
     assert.strictEqual(
-      appendNum.textContent,
-      '12',
-      'output did not equal number 12'
+      display.textContent,
+      '50',
+      'output did not equal number 50'
       );
     });
 
-  xit('should reset to zero if clear key is pressed', function () {
+  it('should reset to zero if clear key is pressed', function () {
     // write your own tests
-    assert.strictEqual(true, false, 'update this test');
+    button.clear.click()
+    console.log(display.textContent)
+    assert.equal(display.textContent, 0);
   });
 
-  xit('should add a decimal to a number', function () {
+  it('should add a decimal to a number', function () {
     // write your own tests
-    assert.strictEqual(true, false, "update this test");
+    button.four.click();
+    button.decimal.click();
+    button.calculate.click();
+    console.log(display.textContent)
+    assert.equal(display.textContent, 4., "Output does not equal 4.");
+
   });
 
-  xit('should show operator keys as depressed when clicked', function () {
+  it('should show operator keys as depressed when clicked', function () {
     // write your own tests. You don't necessarily need to use the "strictEqual" for every test.
-    assert.strictEqual(true, false, 'update this test');
+    //https://nodejs.org/api/assert.html#assertokvalue-message
+    button.multiply.click();
+    const depressedOperatorKey = document.querySelectorAll('.is-depressed')
+    //assert.match(depressedOperatorKey false, 'operator key is depressed');
+    assert.ok(depressedOperatorKey, 'operator key is depressed');
+  })
+  it('should only allow one operator key to be depressed at a time', function () {
+    // write your own tests
+    button.multiply.click();
+    button.add.click();
+    button.divide.click();
+    button.multiply.click();
+    const depressedOperatorKey = document.querySelectorAll('.is-depressed')
+    //key.classList.add('is-depressed'); // Operator keys should be depressed when they're clicked on
+    assert.strictEqual(depressedOperatorKey.length, 1, 'Only one operator key can be pressed consecutively');
   })
 
-  xit('should only allow one operator key to be depressed at a time', function () {
+  it('should show new number if pressed after an operator key', function () {
     // write your own tests
-    assert.strictEqual(true, false, 'update this test');
-  })
-
-  xit('should show new number if pressed after an operator key', function () {
-    // write your own tests
-    assert.strictEqual(true, false, 'update this test');
+    button.one.click()
+    button.add.click()
+    button.four.click()
+    console.log(display.textContent)
+    assert.strict(display.textContent, 4, 'expected number should equal 4');
   });
 
   it('should add two numbers together', function () {
     // write your own tests
-    const  displayNum1 = button.four;
-    const displayNum2 = button.five;
-    displayNum1.click();
+    button.nine.click();
     button.add.click();
-    displayNum2.click();
+    button.eight.click();
     button.calculate.click();
-    assert.equal(display.textContent,  9)
+    console.log(display.textContent)
+    assert.equal(display.textContent,  17)
   })
-  xit('should subtract two numbers', function () {
+  it('should subtract two numbers', function () {
     // write your own tests
-    assert.strictEqual(true, false, 'update this test');
+    button.nine.click();
+    button.subtract.click();
+    button.eight.click();
+    button.calculate.click();
+    console.log(display.textContent)
+    assert.equal(display.textContent,  1)
   })
-  xit('should multiply two numbers', function () {
+  it('should multiply two numbers', function () {
     // write your own tests
-    assert.strictEqual(true, false, 'update this test');
+    button.four.click();
+    button.multiply.click();
+    button.seven.click();
+    button.calculate.click();
+    console.log(display.textContent)
+    assert.equal(display.textContent, 28)
   })
-  xit('should divide two numbers', function () {
+  it('should divide two numbers', function () {
     // write your own tests
-    assert.strictEqual(true, false, 'update this test');
+    button.four.click();
+    button.four.click();
+    button.divide.click();
+    button.one.click();
+    button.one.click();
+    button.calculate.click();
+    console.log(display.textContent)
+    assert.equal(display.textContent, 4)
   })
   // write more tests below. Think about how to test for "unhappy paths".
   // Try to break it in as many ways as you can!
-
-  xit('can chain multiple operations together', function () {
+  it('can only add one decimal at a time', function () {
+    button.four.click();
+    button.decimal.click();
+    button.decimal.click();
+    const depressedDecimal = document.querySelector('.is-depressed');
+    assert.strictEqual(display.textContent.split('.').length - 1, 1, 'only 1 decimal can be clicked')
   });
-
+  it('can not divide number by zero', function () {
+    button.one.click();
+    button.divide.click();
+    button.zero.click();
+    button.calculate.click();
+    console.log(display.textContent)
+    assert.equal(display.textContent, Infinity, 'Cannot divide by zero')
+  })
 });
